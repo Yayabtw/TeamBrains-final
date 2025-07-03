@@ -1,0 +1,75 @@
+version: '3.8'
+services:
+  frontend:
+    build: 
+      context: ..
+      dockerfile: infrastructure/images/teambrains-frontend/Dockerfile
+    container_name: teambrains-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - teambrains-network
+
+  backend:
+    build:
+      context: ..
+      dockerfile: infrastructure/images/teambrains-backend/Dockerfile
+    container_name: teambrains-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+    depends_on:
+      - database
+    networks:
+      - teambrains-network
+
+  database:
+    image: postgres:15
+    container_name: teambrains-database
+    environment:
+      POSTGRES_DB: teambrains
+      POSTGRES_USER: teambrains
+      POSTGRES_PASSWORD: teambrains
+    volumes:
+      - ../data/db/pgdata:/var/lib/postgresql/data
+      - ./infrastructure/db-init/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+    networks:
+      - teambrains-network
+
+  pgadmin:
+    container_name: teambrains-pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: teambrains
+    ports:
+      - "5050:80"
+    depends_on:
+      - database
+    networks:
+      - teambrains-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: teambrains-mailpit
+    restart: unless-stopped
+    volumes:
+      - ../data/mailpit:/data
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    environment:
+      MP_DATABASE: /data/mailpit.db
+    networks:
+      - teambrains-network
+
+networks:
+  teambrains-network:
+    driver: bridge  
