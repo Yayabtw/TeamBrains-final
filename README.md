@@ -85,7 +85,7 @@ Stripe CLI permet de simuler des webhooks et de tester l'intégration Stripe loc
 Pour recevoir les webhooks Stripe dans votre backend local :
 
 ```bash
-stripe listen --forward-to localhost:5001/webhook/stripe
+stripe listen --forward-to localhost:5001/api/partnership/stripe/webhook
 ```
 
 - Cette commande va écouter les événements Stripe et les rediriger vers votre backend Flask.
