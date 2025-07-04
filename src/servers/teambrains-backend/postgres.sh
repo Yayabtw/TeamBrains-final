@@ -42,9 +42,5 @@ flask db upgrade
 echo "Vérification de l'état des migrations..."
 flask db current
 
-# Exécuter le seeding automatique
-echo "🌱 Exécution du seeding automatique..."
-python3 seed_database.py
-
 # Exécuter la commande principale (python3 app.py)
 exec $cmd

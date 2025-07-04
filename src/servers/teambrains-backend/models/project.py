@@ -15,6 +15,17 @@ class Project(db.Model):
     members = db.relationship('User', secondary='project_members', backref=db.backref('projects', lazy='dynamic'))
     progress = db.Column(db.Integer, nullable=False, default=0, server_default='0')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'project_slug': self.project_slug,
+            'creation_date': self.creation_date.isoformat(),
+            'status': self.status,
+            'description': self.description,
+            'creator_id': self.creator_id,
+        }
+
 
 # Table d'association pour les membres de projet
 project_members = db.Table('project_members',
