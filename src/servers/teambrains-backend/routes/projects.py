@@ -28,7 +28,7 @@ def create_project():
         description=data['description'],
         creator_id=user_id,
         project_slug=project_slug,
-        is_public=data.get('is_public', False)  
+        # is_public=data.get('is_public', False)  # Ce champ n'existe plus dans le modèle Project
     )
     db.session.add(new_project)
     db.session.commit()
