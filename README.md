@@ -19,6 +19,9 @@ Lors du premier lancement, la base de données est automatiquement remplie avec 
 
 Vous pouvez utiliser ces comptes pour tester toutes les fonctionnalités de la plateforme (connexion, gestion de projet, espace école, etc.).
 
+## Page école 
+L'url pour accéder à l'espace école est http://localhost:5173/partenariat-ecole
+
 ## Concept & Problématiques
 ### L'Entrepreneur
 - **Défis**: Obstacles techniques et financiers, difficulté à trouver un associé approprié.
